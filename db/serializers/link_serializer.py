@@ -10,7 +10,8 @@ def link_entity(link) -> dict:
         "user": link["user"],
         "tags": link["tags"]
     }
-    
-    
-def links_entity(links) -> List[Link]:
+
+
+def links_entity(links) -> List[dict]:
     return [link_entity(link) for link in links]
+
