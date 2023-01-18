@@ -37,11 +37,14 @@ def get_current_user(token: str = Depends(oauth2_scheme)) -> User:
 
 
 def authenticate_user(username: str, password: str) -> Union[User, bool]:
-    user: UserInDB = UserInDB(**get_user(username=username))
+    user = get_user(username=username)
     
     if not user:
         return False
-    if not Hasher.verify_password(password, user.hashed_password):
+    
+    user_db: UserInDB = UserInDB(**user)
+    
+    if not Hasher.verify_password(password, user_db.hashed_password):
         return False
 
-    return User(**user.dict())
+    return User(**user_db.dict())
