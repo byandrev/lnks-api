@@ -3,19 +3,19 @@ from typing import Optional
 from pydantic import BaseModel, EmailStr, Field
 
 
-class UserBase(BaseModel):
+class User(BaseModel):
     id: Optional[str]
     username: str
     email: EmailStr
 
 
-class UserIn(UserBase):
+class UserIn(User):
     password: str
 
 
-class UserInDB(UserBase):
+class UserInDB(User):
     hashed_password: str
 
 
-class UserResponse(UserBase):
+class UserResponse(User):
     pass
