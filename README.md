@@ -1,6 +1,13 @@
+# Lnks API with Python
 
 
-# TODO
+## Run
+
+1. Install dependencies `pip install -r requirements.txt`
+2. Run `uvicorn main:app --reload`
+
+
+## Todo
 
 - [x] Basic App
 - [x] Router Base
