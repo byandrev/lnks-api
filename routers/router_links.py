@@ -33,7 +33,7 @@ def get_by_id(id: str, user: User = Depends(get_current_user)):
 @router.post("/", response_model=LinkResponse, status_code=status.HTTP_201_CREATED)
 def create_link(link: Link, user: User = Depends(get_current_user)):
     created_link: Union[LinkInDB, None] = repository.add(link=link, user=user)
-    
+
     if created_link is None:
         raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
@@ -54,4 +54,3 @@ def delete_link(id: str, user: User = Depends(get_current_user)):
         )
 
     return deleted_link
-

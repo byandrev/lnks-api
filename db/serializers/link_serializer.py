@@ -14,4 +14,3 @@ def link_entity(link) -> dict:
 
 def links_entity(links) -> List[dict]:
     return [link_entity(link) for link in links]
-

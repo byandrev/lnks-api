@@ -1,4 +1,3 @@
-
 def user_entity(user) -> dict:
     return {
         "id": str(user["_id"]),
@@ -6,4 +5,4 @@ def user_entity(user) -> dict:
         "email": user["email"],
         "hashed_password": user["hashed_password"]
     }
-    
+
