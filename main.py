@@ -1,3 +1,4 @@
+import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -7,10 +8,10 @@ from routers.base import router
 
 
 def start_application():
-    app = FastAPI(title=settings.PROJECT_NAME,
-                  version=settings.PROJECT_VERSION)
+    application: FastAPI = FastAPI(title=settings.PROJECT_NAME,
+                                   version=settings.PROJECT_VERSION)
 
-    app.add_middleware(
+    application.add_middleware(
         CORSMiddleware,
         allow_origins=origins,
         allow_credentials=True,
@@ -18,24 +19,12 @@ def start_application():
         allow_headers=["*"]
     )
 
-    app.include_router(router)
-    return app
+    application.include_router(router)
+    return application
 
 
 app = start_application()
 
-
-@app.on_event("startup")
-async def app_startup():
-    # start_client_db(app)
-    pass
-
-
-@app.on_event("shutdown")
-def shutdown_db_client():
-    # app.mongodb_client.close()
-    pass
-
-
-# if __name__ == "__main__":
-#    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+if __name__ == "__main__":
+    is_reload = True if settings.ENVIRONMENT == "development" else False
+    uvicorn.run("main:app", host="0.0.0.0", port=settings.PORT, reload=is_reload)
