@@ -1,7 +1,5 @@
 from typing import List
 
-from schemas.link import Link
-
 
 def link_entity(link) -> dict:
     return {

@@ -5,7 +5,7 @@ from jose import JWTError
 
 from core.hashing import Hasher
 from core.security import decode_token
-from db.repository.users_repository import get_user
+import db.repository.users_repository as repository
 from schemas.user import UserInDB, User
 
 
@@ -28,7 +28,7 @@ def get_current_user(token: str = Depends(oauth2_scheme)) -> User:
     except JWTError:
         raise credentials_exception
 
-    user: User = User(**get_user(username=username))
+    user: User = User(**repository.get_user(username))
 
     if user is None:
         raise credentials_exception
@@ -37,7 +37,7 @@ def get_current_user(token: str = Depends(oauth2_scheme)) -> User:
 
 
 def authenticate_user(username: str, password: str) -> Union[User, bool]:
-    user = get_user(username=username)
+    user = repository.get_user(username)
 
     if not user:
         return False

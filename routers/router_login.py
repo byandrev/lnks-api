@@ -7,7 +7,6 @@ from core.auth import authenticate_user, get_current_user
 from schemas.token import Token
 from schemas.user import User, UserResponse
 
-
 router = APIRouter(prefix="/login", tags=["auth", "login"])
 
 
@@ -22,7 +21,7 @@ def login(form_data: OAuth2PasswordRequestForm = Depends()):
             headers={"WWW-Authenticate": "Bearer"},
         )
 
-    access_token = create_access_token({ "sub": user.email })
+    access_token = create_access_token({"sub": user.email})
 
     return Token(access_token=access_token, token_type="bearer")
 
