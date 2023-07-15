@@ -8,7 +8,9 @@ class User(BaseModel):
     email: EmailStr
 
 
-class UserIn(User):
+class UserIn(BaseModel):
+    username: str
+    email: EmailStr
     password: str
 
 
