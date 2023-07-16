@@ -6,7 +6,7 @@ from schemas.user import User
 
 class Link(BaseModel):
     url: str
-    user: Optional[User]
+    user: Optional[User] = None
     tags: Optional[List[str]] = None
 
 

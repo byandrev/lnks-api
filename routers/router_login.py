@@ -4,13 +4,14 @@ from fastapi.security import OAuth2PasswordRequestForm
 
 from core.security import create_access_token
 from core.auth import authenticate_user, get_current_user
+from schemas.response import Response
 from schemas.token import Token
 from schemas.user import User, UserResponse
 
 router = APIRouter(prefix="/login", tags=["auth", "login"])
 
 
-@router.post("/", response_model=Token, status_code=status.HTTP_200_OK)
+@router.post("/", response_model=Response, status_code=status.HTTP_200_OK)
 def login(form_data: OAuth2PasswordRequestForm = Depends()):
     user: Union[User, bool] = authenticate_user(form_data.username, form_data.password)
 
@@ -23,9 +24,10 @@ def login(form_data: OAuth2PasswordRequestForm = Depends()):
 
     access_token = create_access_token({"sub": user.email})
 
-    return Token(access_token=access_token, token_type="bearer")
+    token = Token(access_token=access_token, token_type="bearer")
+    return Response(status=status.HTTP_200_OK, body=token, msg="Login successful")
 
 
-@router.get("/me", response_model=UserResponse, status_code=status.HTTP_200_OK)
+@router.get("/me", response_model=Response, status_code=status.HTTP_200_OK)
 def get_me(user: UserResponse = Depends(get_current_user)):
-    return user
+    return Response(status=status.HTTP_200_OK, body=user, msg="User data")
