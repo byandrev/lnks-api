@@ -1,11 +1,12 @@
 from typing import Union
-from fastapi import Depends, HTTPException, status
+from fastapi import Depends, status
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError
 
 from core.hashing import Hasher
 from core.security import decode_token
 import db.repository.users_repository as repository
+from schemas.custom_exception import CustomException
 from schemas.user import UserInDB, User
 
 
@@ -13,10 +14,9 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
 
 def get_current_user(token: str = Depends(oauth2_scheme)) -> User:
-    credentials_exception = HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Could not validate credentials",
-        headers={"WWW-Authenticate": "Bearer"},
+    credentials_exception = CustomException(
+        status=status.HTTP_401_UNAUTHORIZED,
+        error="Could not validate credentials",
     )
 
     try:

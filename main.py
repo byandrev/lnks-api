@@ -1,10 +1,13 @@
 import uvicorn
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 
 from core.config import settings
 from core.cors import origins
+from db.serializers.serializer import serializeDict
 from routers.base import router
+from schemas.custom_exception import CustomException
 
 
 def start_application():
@@ -20,6 +23,11 @@ def start_application():
     )
 
     application.include_router(router)
+    
+    @application.exception_handler(CustomException)
+    async def http_exception_handler(request: Request, exc: CustomException):
+        return JSONResponse(status_code=exc.response.status, content=exc.response.dict())
+    
     return application
 
 
