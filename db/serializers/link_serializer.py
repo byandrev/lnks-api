@@ -6,6 +6,7 @@ def link_entity(link) -> dict:
         "id": str(link["_id"]),
         "url": link["url"],
         "user": link["user"],
+        "name": link["name"],
         "tags": link["tags"]
     }
 

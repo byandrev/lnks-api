@@ -1,10 +1,10 @@
 from typing import Union
-from fastapi import APIRouter, Depends, status, HTTPException
+from fastapi import APIRouter, Depends, status
 
 import db.repository.links_repository as repository
 from core.auth import get_current_user
 from schemas.custom_exception import CustomException
-from schemas.link import Link, LinkInDB, LinkResponse
+from schemas.link import Link, LinkInDB
 from schemas.response import Response
 from schemas.user import User
 
