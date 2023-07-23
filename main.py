@@ -1,11 +1,10 @@
 import uvicorn
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
 from core.config import settings
 from core.cors import origins
-from db.serializers.serializer import serializeDict
 from routers.base import router
 from schemas.custom_exception import CustomException
 
